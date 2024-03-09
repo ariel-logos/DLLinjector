@@ -2,5 +2,5 @@
 
 ### A Simple DLL injector
 
-Just edit the ${\textsf{\color{lightgreen}DLL\verb|_|PATH}}$ and ${\textsf{\color{lightgreen}targetProcessName}}$ with the path to the .dll you wish to inject and the .exe process you wish to inject that into.
+Just edit the ${\textsf{\color{lightgreen}\begin{math}\end{math}PATH}}$ and ${\textsf{\color{lightgreen}targetProcessName}}$ with the path to the .dll you wish to inject and the .exe process you wish to inject that into.
 Compile for x86 or x64 accordingly to the process you need to inject into.
