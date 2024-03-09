@@ -17,30 +17,30 @@ std:: string targetProcessName = "somethingsomething.exe";
 
 //-----------------------------------------------------------------------------------------------------------
 
-BOOL InjectDLL(DWORD procID, const char* dllPATH)
+BOOL InjectDLL(DWORD processID, const char* dllPATH)
 {
-    HANDLE processHND = OpenProcess(PROCESS_ALL_ACCESS, FALSE, procID);
+    HANDLE processHND = OpenProcess(PROCESS_ALL_ACCESS, FALSE, processID);
 
     //Calcuates the length of the dll path string
     SIZE_T dllLEN = strlen(dllPATH) + 1;
 
-    //Allocates memory of dllLEN in the target process
-    LPVOID pDllPath = VirtualAllocEx(processHND, 0, dllLEN, MEM_COMMIT, PAGE_READWRITE);
+    //Allocates memory of dllLEN in the target process and gets the pointer to it
+    LPVOID p_dllPATH = VirtualAllocEx(processHND, 0, dllLEN, MEM_COMMIT, PAGE_READWRITE);
 
     // Writes the path in the memory just allocated
-    WriteProcessMemory(processHND, pDllPath, (LPVOID)dllPATH, dllLEN, 0);
+    WriteProcessMemory(processHND, p_dllPATH, (LPVOID)dllPATH, dllLEN, 0);
 
     // Creates a thread within the target process that calls LoadLibraryA() with argument a pointer to the string containing the dll path
     // effectively loading the DLL in the target process
-    HANDLE threadHND = CreateRemoteThread(processHND, 0, 0, (LPTHREAD_START_ROUTINE)GetProcAddress(GetModuleHandleA("Kernel32.dll"), "LoadLibraryA"), pDllPath, 0, 0);
+    HANDLE threadHND = CreateRemoteThread(processHND, 0, 0, (LPTHREAD_START_ROUTINE)GetProcAddress(GetModuleHandleA("Kernel32.dll"), "LoadLibraryA"), p_dllPATH, 0, 0);
 
     // Waits for the thread to finish
     WaitForSingleObject(threadHND, INFINITE);
 
-    std::cout << "[Debug]: Dll path allocated at: " << std::hex << pDllPath << std::endl;
+    std::cout << "[Debug]: DLL path allocated at: " << std::hex << p_dllPATH << std::endl;
 
     // Free the memory allocated for our dll path
-    VirtualFreeEx(processHND, pDllPath, dllLEN, MEM_RELEASE);
+    VirtualFreeEx(processHND, p_dllPATH, dllLEN, MEM_RELEASE);
 
     return 0;
 }
