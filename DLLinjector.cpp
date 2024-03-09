@@ -86,7 +86,7 @@ int main() {
                 InjectDLL(targetPID, DLL_PATH.c_str());
             }
             else {
-                std::cout << "[Error]: OS not support" << std::endl;
+                std::cout << "[Error]: OS not supported" << std::endl;
                 return 0;
             }
             break;
