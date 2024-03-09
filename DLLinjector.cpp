@@ -72,7 +72,7 @@ int main() {
         //Checks if the process name in entry matches against the process we are interested in 
         if (WSEXEconverted == targetProcessName) {
 
-            std::cout << "[Debug]: (" << WSEXEconverted << ")-- matched ->(" << targetProcessName << ")" << std::endl;
+            std::cout << "[Debug]: (" << WSEXEconverted << ") -- matched -> (" << targetProcessName << ")" << std::endl;
             
             //Sets the target process ID to the process ID of the entry that matched
             targetPID = entry.th32ProcessID;
