@@ -13,7 +13,7 @@
 std::string DLL_PATH = "C:\\MyDLL.dll";
 
 //Change this to the process you want to inject the DLL into
-std:: string targetProcessName = "somethingsomething.exe";
+std::string targetProcessName = "somethingsomething.exe";
 
 //-----------------------------------------------------------------------------------------------------------
 
